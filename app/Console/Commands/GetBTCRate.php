@@ -44,7 +44,9 @@ class GetBTCRate extends Command
         // такой вот прикольчик
 //        $prikolckik = null;
 //        $btcRate = $prikolckik->getBtcRate();
-        Cache::put('btcRate', 20000);
+        $rate = Cache::get('btcRate') ?? 0;
+        \Log::info($rate);
+        Cache::put('btcRate', ($rate+10));
         return 0;
     }
 }
