@@ -16,12 +16,12 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 Route::get('/btcRate', [BTCController::class, 'getRate'])
-//    ->middleware('auth')
+    ->middleware('customAuthenticate')
     ->name('btcRate');
 Route::post('/user/create', [UserController::class, 'create'])
     ->name('user.create');
