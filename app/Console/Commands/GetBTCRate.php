@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\ExternalAPI\Coin;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 
@@ -38,13 +39,8 @@ class GetBTCRate extends Command
      */
     public function handle()
     {
-        // делаем прикольчик для работы с внешней апишкой в целом
-        // потом делаем прикольчик для работы с этой апишкой для битка
-        // потом получаем тут эти данные через эти все прикольчики
-        // такой вот прикольчик
-//        $prikolckik = null;
-//        $btcRate = $prikolckik->getBtcRate();
-        Cache::put('btcRate', 20000);
+        $rate = (new Coin())->getCertainCoinPrice('BTC');
+        Cache::put('btcRate', $rate);
         return 0;
     }
 }
