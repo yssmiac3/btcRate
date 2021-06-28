@@ -14,3 +14,5 @@ Install packages and build docker:
 При логине в редис кладется сгенеренный токен юзера, по которому он потом может получать рейт битка.
 Токен проверяется в мидлвейре
 
+Оба роута /user/create и /user/login ожидают две строки email, password
+Роут /btcRate ожидает в хедере Authorization бирер токен
