@@ -3,54 +3,46 @@
 
 namespace App\Models;
 
-use Redis;
+use App\Services\Token;
+use App\Services\UserFile;
 
 class CustomUser
 {
-    public function __construct()
+    public function __construct(string $email, string $password)
     {
-        // check if data is okay with DTO?
-        $this->email = 'email';
-        $this->password = 'password';
+        $this->email = $email;
+        $this->password = hash('sha256', $password);
+        $this->userFile = new UserFile();
+        $this->token = new Token();
     }
 
-    public function exist($params)
+    private function emailExist()
     {
-        $file = 'some file';
-        $email = $params['email'];
-        // parse this file and find if user with this username already exits
+        return $this->userFile->userExists($this->email);
     }
 
-    public function create($params)
+    public function setToken()
     {
-        if ($this->exist())
+        return $this->token->setToken($this->email);
+    }
+
+    public function save()
+    {
+        if (! $this->emailExist())
         {
-            return false;
+            (new UserFile())->appendUser($this->email, $this->password);
+            return true;
         }
-
-        $email = $params['email'];
-        $password = crypt($params['password']);
-    }
-
-    public function checkPassword()
-    {
-        if (!$this->exist()) {
-            return false;
-        }
-
-        $file = 'some file';
-
-        foreach ($file /* read lines */ as $key => $value) {
-            if ($value) {
-                return $value == crypt($this->password);
-            }
-        }
-
         return false;
     }
 
-    public function isAuthenticated($token, $email)
+    public function checkExistingCredentials()
     {
-        return Redis::get($email) == $token;
+        return (new UserFile())->checkCredentials($this->email, $this->password);
     }
+
+//    public function isAuthenticated()
+//    {
+//        return $this->token->checkByEmail($this->email);
+//    }
 }

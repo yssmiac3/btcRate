@@ -3,16 +3,18 @@
 
 namespace App\Http\Middleware;
 
-
-use App\Providers\RouteServiceProvider;
+use App\Services\Token;
+use Illuminate\Http\Request;
+use Closure;
 
 class CustomAuthenticate
 {
     public function handle(Request $request, Closure $next)
     {
-        $user = 'user';
-        if ($user->isAuthenticated($request->bearerToken())) {
-            return $next($request);
+        if (! (new Token())->checkByToken($request->bearerToken())) {
+            return response('Unauthorized', 401);
         }
+
+        return $next($request);
     }
 }

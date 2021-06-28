@@ -26,5 +26,4 @@ Route::get('/btcRate', [BTCController::class, 'getRate'])
 Route::post('/user/create', [UserController::class, 'create'])
     ->name('user.create');
 Route::post('/user/login', [UserController::class, 'login'])
-//    ->middleware('auth')
     ->name('user.login');
