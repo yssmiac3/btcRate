@@ -34,7 +34,7 @@ class Token
 
     public function checkByEmail(string $email)
     {
-        return Redis::keys(self::strByEmail($email));
+        return (bool) Redis::keys(self::strByEmail($email));
     }
 
     private static function strByEmail(string $email)
