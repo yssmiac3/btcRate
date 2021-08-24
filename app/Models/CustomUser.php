@@ -12,11 +12,11 @@ class CustomUser
     {
         $this->email = $email;
         $this->password = hash('sha256', $password);
-        $this->userFile = new UserFile();
+        $this->userFile = resolve(UserFile::class);
         $this->token = new Token();
     }
 
-    private function emailExist()
+    public function emailExist()
     {
         return $this->userFile->userExists($this->email);
     }
@@ -30,7 +30,7 @@ class CustomUser
     {
         if (! $this->emailExist())
         {
-            (new UserFile())->appendUser($this->email, $this->password);
+            $this->userFile->appendUser($this->email, $this->password);
             return true;
         }
         return false;
@@ -38,7 +38,7 @@ class CustomUser
 
     public function checkExistingCredentials()
     {
-        return (new UserFile())->checkCredentials($this->email, $this->password);
+        return $this->userFile->checkCredentials($this->email, $this->password);
     }
 
 //    public function isAuthenticated()

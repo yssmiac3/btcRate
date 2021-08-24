@@ -2,50 +2,56 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class UserFile
 {
     const PATH = 'users.txt';
 
-    public function __construct()
+    public function __construct(Filesystem $fileSystem)
     {
-        $this->filename = Storage::path(self::PATH);
+        $this->fileSystem = $fileSystem;
     }
 
     public function checkCredentials(string $email, string $password)
     {
-        $file = fopen($this->filename, 'r');
-        $bool = false;
-        while ($str = fgets($file)) {
-            if (explode(';', trim($str)) == array($email, $password)) {
-                $bool = true;
-                break;
+        if (! $this->fileSystem->exists(static::PATH)) {
+            return false;
+        }
+
+        $string = $this->fileSystem->get(static::PATH);
+
+        foreach(preg_split("/((\r?\n)|(\r\n?))/", $string) as $line){
+            if (explode(';', trim($line)) == array($email, $password)) {
+                return true;
             }
         }
-        fclose($file);
-        return $bool;
+
+        return false;
     }
 
     public function appendUser(string $email, string $password)
     {
         $data = $email . ';' . $password;
-        Storage::append(self::PATH, $data);
+        $this->fileSystem->append(static::PATH, $data);
 
         return true;
     }
 
     public function userExists(string $email)
     {
-        $file = fopen($this->filename, 'r');
-        $bool = false;
-        while ($str = fgets($file)) {
-            if (explode(';', trim($str))[0] == $email) {
-                $bool = true;
-                break;
+        if (! $this->fileSystem->exists(static::PATH)) {
+            return false;
+        }
+
+        $string = $this->fileSystem->get(static::PATH);
+
+        foreach(preg_split("/((\r?\n)|(\r\n?))/", $string) as $line){
+            if (explode(';', trim($line))[0] == $email) {
+                return true;
             }
         }
-        fclose($file);
-        return $bool;
+
+        return false;
     }
 }

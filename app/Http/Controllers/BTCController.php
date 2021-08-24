@@ -9,7 +9,13 @@ class BTCController extends Controller
 {
     public function getRate()
     {
-        return response()->json(Cache::get('btcRate'), 200);
-//        return response()->json((new Coin())->getCertainCoinPrice('BTC'), 200);
+//        return response()->json([
+//            'rate' => Cache::get('btcRate')
+//        ],
+//            200);
+        return response()->json([
+            'rate' => (new Coin())->getCertainCoinPrice('BTC')
+            ],
+            200);
     }
 }

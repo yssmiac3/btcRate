@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redis;
 
 class Token
 {
-    public static function getToken()
+    protected static function getToken()
     {
         return bin2hex(random_bytes(32));
     }
@@ -34,7 +34,7 @@ class Token
 
     public function checkByEmail(string $email)
     {
-        return Redis::keys(self::strByEmail($email));
+        return (bool) Redis::keys(self::strByEmail($email));
     }
 
     private static function strByEmail(string $email)
