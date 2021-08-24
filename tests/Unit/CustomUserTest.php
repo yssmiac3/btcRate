@@ -15,7 +15,7 @@ class CustomUserTest extends TestCase
     private $password;
     private $customUser;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

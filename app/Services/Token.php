@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redis;
 
 class Token
 {
-    public static function getToken()
+    protected static function getToken()
     {
         return bin2hex(random_bytes(32));
     }

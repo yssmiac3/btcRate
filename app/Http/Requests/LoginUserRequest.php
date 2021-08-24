@@ -14,8 +14,7 @@ class LoginUserRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = new CustomUser($this->email, $this->password);
-        return $user->checkExistingCredentials();
+        return (new CustomUser($this->email, $this->password))->checkExistingCredentials();
     }
 
     /**

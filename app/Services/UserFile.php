@@ -15,6 +15,10 @@ class UserFile
 
     public function checkCredentials(string $email, string $password)
     {
+        if (! $this->fileSystem->exists(static::PATH)) {
+            return false;
+        }
+
         $string = $this->fileSystem->get(static::PATH);
 
         foreach(preg_split("/((\r?\n)|(\r\n?))/", $string) as $line){
@@ -36,6 +40,10 @@ class UserFile
 
     public function userExists(string $email)
     {
+        if (! $this->fileSystem->exists(static::PATH)) {
+            return false;
+        }
+
         $string = $this->fileSystem->get(static::PATH);
 
         foreach(preg_split("/((\r?\n)|(\r\n?))/", $string) as $line){
