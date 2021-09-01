@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\CustomUser;
-use App\Services\UserFile;
+use App\Services\User\UserFile;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 

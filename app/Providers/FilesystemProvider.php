@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\UserFile;
+use App\Services\User\UserFile;
+use App\Services\User\UserRepository;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Storage;
@@ -26,6 +27,8 @@ class FilesystemProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app->bind(UserRepository::class, UserFile::class);
+
         $this->app->when( UserFile::class)
             ->needs(Filesystem::class)
             ->give( function () {

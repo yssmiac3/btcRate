@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\User;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 
-class UserFile
+class UserFile implements UserRepository
 {
     const PATH = 'users.txt';
+
+    private $fileSystem;
 
     public function __construct(Filesystem $fileSystem)
     {
         $this->fileSystem = $fileSystem;
     }
 
-    public function checkCredentials(string $email, string $password)
+    public function checkCredentials(string $email, string $password): bool
     {
         if (! $this->fileSystem->exists(static::PATH)) {
             return false;
@@ -30,7 +32,7 @@ class UserFile
         return false;
     }
 
-    public function appendUser(string $email, string $password)
+    public function appendUser(string $email, string $password): bool
     {
         $data = $email . ';' . $password;
         $this->fileSystem->append(static::PATH, $data);
@@ -38,7 +40,7 @@ class UserFile
         return true;
     }
 
-    public function userExists(string $email)
+    public function userExists(string $email): bool
     {
         if (! $this->fileSystem->exists(static::PATH)) {
             return false;

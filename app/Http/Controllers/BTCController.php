@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\ExternalAPI\Coin;
+use App\ExternalAPI\CoinPaprika;
+use App\Services\RateService;
 use Illuminate\Support\Facades\Cache;
 
 class BTCController extends Controller
@@ -13,8 +14,9 @@ class BTCController extends Controller
 //            'rate' => Cache::get('btcRate')
 //        ],
 //            200);
+        $rate = resolve(RateService::class)->getRate('BTC');
         return response()->json([
-            'rate' => (new Coin())->getCertainCoinPrice('BTC')
+            'rate' => $rate
             ],
             200);
     }

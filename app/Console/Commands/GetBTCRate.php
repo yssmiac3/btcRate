@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\ExternalAPI\Coin;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Cache;
 
 class GetBTCRate extends Command
 {
@@ -20,7 +19,7 @@ class GetBTCRate extends Command
      *
      * @var string
      */
-    protected $description = 'Get BTC current rate with external API and put to cache';
+    protected $description = 'Get BTC current rate with external API';
 
     /**
      * Create a new command instance.
@@ -37,10 +36,9 @@ class GetBTCRate extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(Coin $coin)
     {
-        $rate = (new Coin())->getCertainCoinPrice('BTC');
-        Cache::put('btcRate', $rate);
+        echo $coin->getCertainCoinPrice('BTC');
         return 0;
     }
 }

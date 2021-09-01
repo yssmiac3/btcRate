@@ -4,7 +4,7 @@
 namespace App\Models;
 
 use App\Services\Token;
-use App\Services\UserFile;
+use App\Services\User\UserRepository;
 
 class CustomUser
 {
@@ -12,7 +12,7 @@ class CustomUser
     {
         $this->email = $email;
         $this->password = hash('sha256', $password);
-        $this->userFile = resolve(UserFile::class);
+        $this->userFile = resolve(UserRepository::class);
         $this->token = new Token();
     }
 

@@ -179,6 +179,7 @@ return [
          * Other Service Providers
          */
         \App\Providers\FilesystemProvider::class,
+        \App\Providers\CoinProvider::class,
 
     ],
 

@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Services\Token;
-use App\Services\UserFile;
+use App\Services\User\UserFile;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;

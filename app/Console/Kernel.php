@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command(\App\Console\Commands\GetBTCRate::class)->everyMinute();
+//         $schedule->command(\App\Console\Commands\GetBTCRate::class)->everyMinute();
     }
 
     /**

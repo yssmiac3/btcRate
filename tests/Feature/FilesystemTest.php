@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Services\UserFile;
+use App\Services\User\UserFile;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
